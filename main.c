@@ -9,6 +9,21 @@ int main () {
     // Initialisation :
     SDL_Window* window = NULL;
     SDL_Renderer* renderer = NULL;
+    SDL_Event event;
+    SDL_bool quit = SDL_FALSE;
+
+    Coord pos[5];
+    pos[0].x = -0.25;
+    pos[0].y = 0.25;
+    pos[1].x = 0.25;
+    pos[1].y = 0.25;
+    pos[2].x = 0.25;
+    pos[2].y = -0.25;
+    pos[3].x = -0.25;
+    pos[3].y = -0.25;
+    pos[4].x = -0.25;
+    pos[4].y = 0.25;
+
 
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         SDL_Log("Erreur : Initialisation SDL > %s\n", SDL_GetError());
@@ -40,33 +55,47 @@ int main () {
 
 
     // Évènements :
-    SDL_Event event;
-    SDL_bool quit = SDL_FALSE;
 
     while (!quit) {
-
-        // Refresh:
-        clear(renderer);
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 25);
-        drawLines(window, renderer);
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-        SDL_RenderPresent(renderer);
+        update(window, renderer, pos);
 
 
 
         SDL_WaitEvent(&event);
 
         if (event.type == SDL_KEYDOWN) {
-            if (event.key.keysym.scancode == SDL_SCANCODE_F11) {
-                if (SDL_GetWindowFlags(window) & SDL_WINDOW_FULLSCREEN) {
-                    SDL_SetWindowFullscreen(window, 0);
-                } else {
-                    SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
-                }
-            }
 
-            if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
-                quit = SDL_TRUE;
+            switch (event.key.keysym.scancode) {
+
+                case 82: // UP
+                    for (int i = 0; i < 5; i++) pos[i].y -= 0.02;
+                    break;
+
+                case 81: // DOWN
+                    for (int i = 0; i < 5; i++) pos[i].y += 0.02;
+                    break;
+
+                case 80: // LEFT
+                    for (int i = 0; i < 5; i++) pos[i].x -= 0.02;
+                    break;
+
+                case 79: // RIGHT
+                    for (int i = 0; i < 5; i++) pos[i].x += 0.02;
+                    break;
+
+
+                case 68: // F11
+                    if (SDL_GetWindowFlags(window) & SDL_WINDOW_FULLSCREEN) {
+                        SDL_SetWindowFullscreen(window, 0);
+                    } else {
+                        SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+                    }
+                    break;
+                case 41: // ESCAPE
+                    quit = SDL_TRUE;
+                    break;
+            }
+                
         }
                 
         if (event.type == SDL_QUIT)
