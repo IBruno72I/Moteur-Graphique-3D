@@ -1,10 +1,11 @@
 #include "window.h"
+#include "events.h"
 #include <SDL2/SDL.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-
-void update(SDL_Window* window, SDL_Renderer* renderer, Coord* pos) {
+// Refresh Window
+void updateWindow(SDL_Window* window, SDL_Renderer* renderer, Coord* pos) {
     clear(renderer);
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 25);
     drawLines(window, renderer, pos);
@@ -12,7 +13,7 @@ void update(SDL_Window* window, SDL_Renderer* renderer, Coord* pos) {
     SDL_RenderPresent(renderer);
 }
 
-
+// Convert Points x: [-1, 1] -> [0, 1920]  y: [-1, 1] -> [0, 1080]       P(x,y) = (0, 0) => middle of screen
 SDL_Point convertCoord(SDL_Window* window, Coord pos) {
     SDL_Point point;
     int width = 0;
@@ -23,7 +24,7 @@ SDL_Point convertCoord(SDL_Window* window, Coord pos) {
     return point;
 }
 
-
+// Clear Window
 void clear(SDL_Renderer* renderer) {
         if(0 != SDL_RenderClear(renderer))
         {
@@ -32,7 +33,7 @@ void clear(SDL_Renderer* renderer) {
         }
     }
 
-
+// Draw the lines between points
 void drawLines(SDL_Window* window, SDL_Renderer* renderer, Coord* pos) {
     SDL_Point points[5];
 
