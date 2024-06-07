@@ -7,6 +7,7 @@
 
 int main () {
 
+
     // INIT..
 
     // Init Values
@@ -26,6 +27,7 @@ int main () {
     pos[3].y = -0.25;
     pos[4].x = -0.25;
     pos[4].y = 0.25;
+    SDL_bool UP = SDL_FALSE, DOWN = SDL_FALSE, LEFT = SDL_FALSE, RIGHT = SDL_FALSE;
     // Init SDL
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         SDL_Log("Erreur : Initialisation SDL > %s\n", SDL_GetError());
@@ -56,21 +58,19 @@ int main () {
         exit(EXIT_FAILURE);
     }
 
+
     // START..
 
     SDL_ShowWindow(window);
     while (!quit) {
 
         updateWindow(window, renderer, pos);
-        updateEvents(window, &event, pos, &quit);
+        updateEvents(window, &event, pos, &quit, &UP, &DOWN, &LEFT, &RIGHT);
+        updatePosition(pos, UP, DOWN, LEFT, RIGHT);
 
     }
-    if(NULL != texture)
-        SDL_DestroyTexture(texture);
-    if(NULL != renderer)
-        SDL_DestroyRenderer(renderer);
-    if(NULL != window)
-        SDL_DestroyWindow(window);
+
+    destroyToQuit(window, renderer, texture);
     SDL_Quit();
     return EXIT_SUCCESS;
 }
