@@ -12,6 +12,7 @@ int main () {
     // Init Values
     SDL_Window* window = NULL;
     SDL_Renderer* renderer = NULL;
+    SDL_Texture* texture = NULL;
     SDL_Event event;
     SDL_bool quit = SDL_FALSE;
     Coord pos[5];
@@ -47,7 +48,13 @@ int main () {
         SDL_Log("Erreur : CreateRenderer > %s\n", SDL_GetError());
         exit(EXIT_FAILURE);
     }
-
+    // Init Texture
+    texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, 
+                                SDL_TEXTUREACCESS_TARGET, 200, 200);
+    if (texture == NULL) {
+        SDL_Log("Erreur : CreateTexture > %s\n", SDL_GetError());
+        exit(EXIT_FAILURE);
+    }
 
     // START..
 
@@ -58,7 +65,12 @@ int main () {
         updateEvents(window, &event, pos, &quit);
 
     }
-    SDL_DestroyWindow(window);
+    if(NULL != texture)
+        SDL_DestroyTexture(texture);
+    if(NULL != renderer)
+        SDL_DestroyRenderer(renderer);
+    if(NULL != window)
+        SDL_DestroyWindow(window);
     SDL_Quit();
     return EXIT_SUCCESS;
 }
