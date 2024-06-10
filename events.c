@@ -1,12 +1,13 @@
 #include "events.h"
 #include "window.h"
+#include "maths.h"
 #include <SDL2/SDL.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 
 // Refresh Window
-void updateWindow(SDL_Window* window, SDL_Renderer* renderer, Coord* pos) {
+void updateWindow(SDL_Window* window, SDL_Renderer* renderer, Proj* pos) {
     clear(renderer);
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 25);
     drawLines(window, renderer, pos);
@@ -15,7 +16,7 @@ void updateWindow(SDL_Window* window, SDL_Renderer* renderer, Coord* pos) {
 }
 
 // Refresh Events
-void updateEvents(SDL_Window* window, SDL_Event* event, Coord* pos, SDL_bool* quit, SDL_bool* UP,SDL_bool* DOWN,SDL_bool* LEFT,SDL_bool* RIGHT) {
+void updateEvents(SDL_Window* window, SDL_Event* event, Proj* pos, SDL_bool* quit, SDL_bool* UP,SDL_bool* DOWN,SDL_bool* LEFT,SDL_bool* RIGHT) {
     SDL_WaitEvent(event);
     if ((*event).type == SDL_KEYDOWN) {
         switch ((*event).key.keysym.scancode) {
@@ -64,7 +65,7 @@ void updateEvents(SDL_Window* window, SDL_Event* event, Coord* pos, SDL_bool* qu
 }
 
 // Refresh Position
-void updatePosition(Coord* pos, SDL_bool UP,SDL_bool DOWN,SDL_bool LEFT,SDL_bool RIGHT) {
+void updatePosition(Proj* pos, SDL_bool UP,SDL_bool DOWN,SDL_bool LEFT,SDL_bool RIGHT) {
     if (UP) for (int i = 0; i < 5; i++) pos[i].y -= 0.02;
     if (DOWN) for (int i = 0; i < 5; i++) pos[i].y += 0.02;
     if (LEFT) for (int i = 0; i < 5; i++) pos[i].x -= 0.02;
