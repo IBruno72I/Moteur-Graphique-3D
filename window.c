@@ -16,11 +16,15 @@ void clear(SDL_Renderer* renderer) {
     }
 
 // Draw the lines between points
-void drawLines(SDL_Window* window, SDL_Renderer* renderer, Proj* pos) {
-    SDL_Point points[5];
-
+void drawScare(SDL_Window* window, SDL_Renderer* renderer, Coord* recF, Coord* recB) {
+    SDL_Point pointsF[5];
+    SDL_Point pointsB[5];
     for (int i = 0; i < 5; i++) {
-        points[i] = convertCoord(window, pos[i]);
+        pointsF[i] = convertCoord(window, recF[i]);
+        pointsB[i] = convertCoord(window, recB[i]);
     }
-    SDL_RenderDrawLines(renderer, points, 5);
+    SDL_RenderDrawLines(renderer, pointsF, 5);
+    SDL_RenderDrawLines(renderer, pointsB, 5);
+
+    for (int i = 0; i < 4; i++) SDL_RenderDrawLine(renderer, pointsF[i].x, pointsF[i].y, pointsB[i].x, pointsB[i].y);
 }

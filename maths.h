@@ -16,6 +16,9 @@ typedef struct{
     float y;
 }Proj;
 
-SDL_Point convertCoord(SDL_Window* window, Proj pos);
+SDL_Point convertCoord(SDL_Window* window, Coord pos);
+//void rotationX(double a, Coord* pos);
+//void rotationY(double a, Coord* pos);
+//void rotationZ(double a, Coord* pos);
 
 #endif

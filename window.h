@@ -6,7 +6,6 @@
 #include <SDL2/SDL.h>
 
 void clear(SDL_Renderer* renderer);
-void drawLines(SDL_Window* window, SDL_Renderer* renderer, Proj* pos);
-
+void drawScare(SDL_Window* window, SDL_Renderer* renderer, Coord* recF, Coord* recB);
 
 #endif

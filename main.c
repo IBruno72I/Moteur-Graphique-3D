@@ -17,22 +17,51 @@ int main () {
     SDL_Texture* texture = NULL;
     SDL_Event event;
     SDL_bool quit = SDL_FALSE;
-    Proj pos[5];
 
-    pos[0].x = -0.2;
-    pos[0].y = 0.2;
+    // Rec Front
+    Coord recF[5];
+    // Rec Front : Point 1
+    recF[0].x = -0.2;
+    recF[0].y = 0.2;
+    recF[0].z = -0.2;
+    recF[4].x = -0.2;
+    recF[4].y = 0.2;
+    recF[4].z = -0.2;
+    // Rec Front : Point 2
+    recF[1].x = 0.2;
+    recF[1].y = 0.2;
+    recF[1].z = -0.2;
+    // Rec Front : Point 3
+    recF[2].x = 0.2;
+    recF[2].y = -0.2;
+    recF[2].z = -0.2;
+    // Rec Front : Point 4
+    recF[3].x = -0.2;
+    recF[3].y = -0.2;
+    recF[3].z = -0.2;
 
-    pos[1].x = 0.2;
-    pos[1].y = 0.2;
-
-    pos[2].x = 0.2;
-    pos[2].y = -0.2;
-
-    pos[3].x = -0.2;
-    pos[3].y = -0.2;
-
-    pos[4].x = -0.2;
-    pos[4].y = 0.2;
+    // Rec Back
+    Coord recB[5];
+    // Rec Back : Point 1
+    recB[0].x = -0.2;
+    recB[0].y = 0.2;
+    recB[0].z = 0.2;
+    recB[4].x = -0.2;
+    recB[4].y = 0.2;
+    recB[4].z = 0.2;
+    // Rec Back : Point 2
+    recB[1].x = 0.2;
+    recB[1].y = 0.2;
+    recB[1].z = 0.2;
+    // Rec Back : Point 3
+    recB[2].x = 0.2;
+    recB[2].y = -0.2;
+    recB[2].z = 0.2;
+    // Rec Back : Point 4
+    recB[3].x = -0.2;
+    recB[3].y = -0.2;
+    recB[3].z = 0.2;
+    
 
     SDL_bool UP = SDL_FALSE, DOWN = SDL_FALSE, LEFT = SDL_FALSE, RIGHT = SDL_FALSE;
 
@@ -72,9 +101,9 @@ int main () {
     SDL_ShowWindow(window);
     while (!quit) {
          
-        updateWindow(window, renderer, pos);
-        updateEvents(window, &event, pos, &quit, &UP, &DOWN, &LEFT, &RIGHT);
-        updatePosition(pos, UP, DOWN, LEFT, RIGHT);
+        updateWindow(window, renderer, recF, recB);
+        updateEvents(window, &event, recF, recB, &quit, &UP, &DOWN, &LEFT, &RIGHT);
+        updatePosition(recF, recB, UP, DOWN, LEFT, RIGHT);
 
     }
 
