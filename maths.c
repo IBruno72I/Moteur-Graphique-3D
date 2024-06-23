@@ -4,22 +4,26 @@
 #include <SDL2/SDL.h>
 #include <stdio.h>
 #include <stdlib.h>
-//#include <math.h>
-#define FOV 180
-
+#include <math.h>
 
 // Convert Points x: [-1, 1] -> [0, 1920]  y: [-1, 1] -> [0, 1080]       P(x,y) = (0, 0) => middle of screen
 SDL_Point convertCoord(SDL_Window* window, Coord pos) {
-    Proj projPos;
     SDL_Point point;
+    Proj projPos;
+    projPos = projection(pos);
     int width = 0;
     int height = 0;
-    projPos.x = pos.x / (pos.z * (tan(FOV/2)));
-    projPos.y = pos.y / (pos.z * (tan(FOV/2)));
     SDL_GetWindowSize(window, &width, &height);
-    point.x = (projPos.x + 1) * (width/2);
-    point.y = (projPos.y + 1) * (height/2);
+    point.x = (projPos.x + 1)/2 * width;
+    point.y = (projPos.y + 1)/2 * height;
     return point;
+}
+
+Proj projection(Coord pos) {
+    Proj projPos;
+    projPos.x = pos.x/pos.z;
+    projPos.y = pos.y/pos.z;
+    return projPos;
 }
 
 /*  Rotation X
