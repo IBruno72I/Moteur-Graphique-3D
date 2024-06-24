@@ -17,16 +17,16 @@ void destroyToQuit(SDL_Window* window, SDL_Renderer* renderer, SDL_Texture* text
 }
 
 // Refresh Window
-void updateWindow(SDL_Window* window, SDL_Renderer* renderer, Coord* recF, Coord* recB, float focal) {
+void updateWindow(SDL_Window* window, SDL_Renderer* renderer, Coord cam, Coord* recF, Coord* recB, float focal) {
     clear(renderer);
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 25);
-    drawScare(window, renderer, recF, recB, focal);
+    drawScare(window, renderer, cam, recF, recB, focal);
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
     SDL_RenderPresent(renderer);
 }
 
 // Refresh Events
-void updateEvents(SDL_Window* window, SDL_Event* event, Coord* recF, Coord* recB, SDL_bool* quit, Events* key, float* focal) {
+void updateEvents(SDL_Window* window, SDL_Event* event, SDL_bool* quit, Events* key, float* focal) {
     SDL_WaitEvent(event);
     if ((*event).type == SDL_KEYDOWN) {
         switch ((*event).key.keysym.scancode) {
@@ -81,21 +81,9 @@ void updateEvents(SDL_Window* window, SDL_Event* event, Coord* recF, Coord* recB
 }
 
 // Refresh Position
-void updatePosition(Coord* recF, Coord* recB, Events key) {
-    if (key.UP) for (int i = 0; i < 5; i++) {
-        recF[i].y -= 0.02;
-        recB[i].y -= 0.02;
-    }
-    if (key.DOWN) for (int i = 0; i < 5; i++) {
-        recF[i].y += 0.02;
-        recB[i].y += 0.02;
-    }
-    if (key.LEFT) for (int i = 0; i < 5; i++) {
-        recF[i].x -= 0.02;
-        recB[i].x -= 0.02;
-    }
-    if (key.RIGHT)  for (int i = 0; i < 5; i++) {
-        recF[i].x += 0.02;
-        recB[i].x += 0.02;
-    }
+void updatePosition(Coord* cam, float* speed, Events key) {
+    if (key.UP) cam->z += (*speed);
+    if (key.DOWN) cam->z -= (*speed);
+    if (key.LEFT) cam->x -= (*speed);
+    if (key.RIGHT) cam->x += (*speed);
 }

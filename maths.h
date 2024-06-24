@@ -17,7 +17,7 @@ typedef struct{
     float y;
 }Proj;
 
-SDL_Point convertCoord(SDL_Window* window, Coord pos, float focal);
+SDL_Point convertCoord(SDL_Window* window, Coord cam, Coord pos, float focal);
 Proj projection(Coord pos, float focal);
 //void rotationX(double a, Coord* pos);
 //void rotationY(double a, Coord* pos);

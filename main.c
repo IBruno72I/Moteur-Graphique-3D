@@ -18,6 +18,7 @@ int main () {
     SDL_Event event;
     SDL_bool quit = SDL_FALSE;
     float focal = 1;
+    float speed = 0.1;
 
     // Position View
     Coord cam;
@@ -109,9 +110,9 @@ int main () {
     SDL_ShowWindow(window);
     while (!quit) {
          
-        updateWindow(window, renderer, recF, recB, focal);
-        updateEvents(window, &event, recF, recB, &quit, &key, &focal);
-        updatePosition(recF, recB, key);
+        updateWindow(window, renderer, cam, recF, recB, focal);
+        updateEvents(window, &event, &quit, &key, &focal);
+        updatePosition(&cam, &speed, key);
 
     }
 

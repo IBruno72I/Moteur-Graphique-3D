@@ -7,9 +7,12 @@
 #include <math.h>
 
 // Convert Points x: [-1, 1] -> [0, 1920]  y: [-1, 1] -> [0, 1080]       P(x,y) = (0, 0) => middle of screen
-SDL_Point convertCoord(SDL_Window* window, Coord pos, float focal) {
+SDL_Point convertCoord(SDL_Window* window, Coord cam, Coord pos, float focal) {
     SDL_Point point;
     Proj projPos;
+    pos.x -= cam.x;
+    pos.y -= cam.y;
+    pos.z -= cam.z;
     projPos = projection(pos, focal);
     int width = 0;
     int height = 0;
