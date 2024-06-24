@@ -26,21 +26,21 @@ void updateWindow(SDL_Window* window, SDL_Renderer* renderer, Coord* recF, Coord
 }
 
 // Refresh Events
-void updateEvents(SDL_Window* window, SDL_Event* event, Coord* recF, Coord* recB, SDL_bool* quit, SDL_bool* UP, SDL_bool* DOWN, SDL_bool* LEFT, SDL_bool* RIGHT, float* focal) {
+void updateEvents(SDL_Window* window, SDL_Event* event, Coord* recF, Coord* recB, SDL_bool* quit, Events* key, float* focal) {
     SDL_WaitEvent(event);
     if ((*event).type == SDL_KEYDOWN) {
         switch ((*event).key.keysym.scancode) {
             case 82: // UP
-                *UP = SDL_TRUE;
+                key->UP = SDL_TRUE;
                 break;
             case 81: // DOWN
-                *DOWN = SDL_TRUE;
+                key->DOWN = SDL_TRUE;
                 break;
             case 80: // LEFT
-                *LEFT = SDL_TRUE;
+                key->LEFT = SDL_TRUE;
                 break;
             case 79: // RIGHT
-                *RIGHT = SDL_TRUE;
+                key->RIGHT = SDL_TRUE;
                 break;
             case 68: // F11
                 if (SDL_GetWindowFlags(window) & SDL_WINDOW_FULLSCREEN) {
@@ -63,16 +63,16 @@ void updateEvents(SDL_Window* window, SDL_Event* event, Coord* recF, Coord* recB
     if ((*event).type == SDL_KEYUP) {
         switch ((*event).key.keysym.scancode) {
             case 82: // UP
-                *UP = SDL_FALSE;
+                key->UP = SDL_FALSE;
                 break;
             case 81: // DOWN
-                *DOWN = SDL_FALSE;
+                key->DOWN = SDL_FALSE;
                 break;
             case 80: // LEFT
-                *LEFT = SDL_FALSE;
+                key->LEFT = SDL_FALSE;
                 break;
             case 79: // RIGHT
-                *RIGHT = SDL_FALSE;
+                key->RIGHT = SDL_FALSE;
                 break;
         }
     }
@@ -81,20 +81,20 @@ void updateEvents(SDL_Window* window, SDL_Event* event, Coord* recF, Coord* recB
 }
 
 // Refresh Position
-void updatePosition(Coord* recF, Coord* recB, SDL_bool UP, SDL_bool DOWN, SDL_bool LEFT, SDL_bool RIGHT) {
-    if (UP) for (int i = 0; i < 5; i++) {
+void updatePosition(Coord* recF, Coord* recB, Events key) {
+    if (key.UP) for (int i = 0; i < 5; i++) {
         recF[i].y -= 0.02;
         recB[i].y -= 0.02;
     }
-    if (DOWN) for (int i = 0; i < 5; i++) {
+    if (key.DOWN) for (int i = 0; i < 5; i++) {
         recF[i].y += 0.02;
         recB[i].y += 0.02;
     }
-    if (LEFT) for (int i = 0; i < 5; i++) {
+    if (key.LEFT) for (int i = 0; i < 5; i++) {
         recF[i].x -= 0.02;
         recB[i].x -= 0.02;
     }
-    if (RIGHT)  for (int i = 0; i < 5; i++) {
+    if (key.RIGHT)  for (int i = 0; i < 5; i++) {
         recF[i].x += 0.02;
         recB[i].x += 0.02;
     }

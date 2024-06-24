@@ -19,6 +19,12 @@ int main () {
     SDL_bool quit = SDL_FALSE;
     float focal = 1;
 
+    // Position View
+    Coord cam;
+    cam.x = 0;
+    cam.y = 0;
+    cam.z = 0;
+
     // Rec Front
     Coord recF[5];
     // Rec Front : Point 1
@@ -63,8 +69,9 @@ int main () {
     recB[3].y = -1;
     recB[3].z = 3;
     
-
-    SDL_bool UP = SDL_FALSE, DOWN = SDL_FALSE, LEFT = SDL_FALSE, RIGHT = SDL_FALSE;
+    // Key Events
+    Events key;
+    key.UP = SDL_FALSE, key.DOWN = SDL_FALSE, key.LEFT = SDL_FALSE, key.RIGHT = SDL_FALSE;
 
     // Init SDL
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -103,8 +110,8 @@ int main () {
     while (!quit) {
          
         updateWindow(window, renderer, recF, recB, focal);
-        updateEvents(window, &event, recF, recB, &quit, &UP, &DOWN, &LEFT, &RIGHT, &focal);
-        updatePosition(recF, recB, UP, DOWN, LEFT, RIGHT);
+        updateEvents(window, &event, recF, recB, &quit, &key, &focal);
+        updatePosition(recF, recB, key);
 
     }
 
