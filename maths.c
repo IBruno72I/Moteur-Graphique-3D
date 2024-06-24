@@ -24,8 +24,8 @@ SDL_Point convertCoord(SDL_Window* window, Coord cam, Coord pos, float focal) {
 
 Proj projection(Coord pos, float focal) {
     Proj projPos;
-    projPos.x = focal*pos.x /pos.z;
-    projPos.y = focal*pos.y /pos.z;
+    projPos.x = focal*pos.x / pos.z;
+    projPos.y = focal*pos.y / pos.z;
     return projPos;
 }
 

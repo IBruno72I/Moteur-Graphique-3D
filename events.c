@@ -26,21 +26,36 @@ void updateWindow(SDL_Window* window, SDL_Renderer* renderer, Coord cam, Coord* 
 }
 
 // Refresh Events
-void updateEvents(SDL_Window* window, SDL_Event* event, SDL_bool* quit, Events* key, float* focal) {
+void updateEvents(SDL_Window* window, SDL_Event* event, Events* key, float* focal) {
     SDL_WaitEvent(event);
     if ((*event).type == SDL_KEYDOWN) {
         switch ((*event).key.keysym.scancode) {
-            case 82: // UP
-                key->UP = SDL_TRUE;
+            case 26: // FORWARD (Z)
+                key->FORWARD = SDL_TRUE;
                 break;
-            case 81: // DOWN
-                key->DOWN = SDL_TRUE;
+            case 22: // DOWN (S)
+                key->REAR = SDL_TRUE;
                 break;
-            case 80: // LEFT
+            case 4: // LEFT (Q)
                 key->LEFT = SDL_TRUE;
                 break;
-            case 79: // RIGHT
+            case 7: // RIGHT (D)
                 key->RIGHT = SDL_TRUE;
+                break;
+            case 44: // SPACE
+                key->SPACE = SDL_TRUE;
+                break;
+            case 224: // CTRL
+                key->CTRL = SDL_TRUE;
+                break;
+            case 225: // SHIFT
+                key->SHIFT = SDL_TRUE;
+                break;
+            case 87: // +
+                *focal += 0.1;
+                break;
+            case 86: // -
+                *focal -= 0.1;
                 break;
             case 68: // F11
                 if (SDL_GetWindowFlags(window) & SDL_WINDOW_FULLSCREEN) {
@@ -49,41 +64,46 @@ void updateEvents(SDL_Window* window, SDL_Event* event, SDL_bool* quit, Events* 
                     SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
                 }
                 break;
-            case 87: // +
-                *focal += 0.1;
-                break;
-            case 86: // -
-                *focal -= 0.1;
-                break;
             case 41: // ESCAPE
-                *quit = SDL_TRUE;
+                key->QUIT = SDL_TRUE;
                 break;
         }
     }
     if ((*event).type == SDL_KEYUP) {
         switch ((*event).key.keysym.scancode) {
-            case 82: // UP
-                key->UP = SDL_FALSE;
+            case 26: // FORWARD (Z)
+                key->FORWARD = SDL_FALSE;
                 break;
-            case 81: // DOWN
-                key->DOWN = SDL_FALSE;
+            case 22: // DOWN (S)
+                key->REAR = SDL_FALSE;
                 break;
-            case 80: // LEFT
+            case 4: // LEFT (Q)
                 key->LEFT = SDL_FALSE;
                 break;
-            case 79: // RIGHT
+            case 7: // RIGHT (D)
                 key->RIGHT = SDL_FALSE;
+                break;
+            case 44: // SPACE
+                key->SPACE = SDL_FALSE;
+                break;
+            case 224: // CTRL
+                key->CTRL = SDL_FALSE;
+                break;
+            case 225: // SHIFT
+                key->SHIFT = SDL_FALSE;
                 break;
         }
     }
     if ((*event).type == SDL_QUIT)
-        *quit = SDL_TRUE;
+        key->QUIT = SDL_TRUE;
 }
 
 // Refresh Position
 void updatePosition(Coord* cam, float* speed, Events key) {
-    if (key.UP) cam->z += (*speed);
-    if (key.DOWN) cam->z -= (*speed);
+    if (key.FORWARD) cam->z += (*speed);
+    if (key.REAR) cam->z -= (*speed);
     if (key.LEFT) cam->x -= (*speed);
     if (key.RIGHT) cam->x += (*speed);
+    if (key.SPACE) cam->y -= (*speed);
+    if (key.CTRL) cam->y += (*speed);
 }

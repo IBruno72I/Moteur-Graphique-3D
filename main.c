@@ -16,7 +16,6 @@ int main () {
     SDL_Renderer* renderer = NULL;
     SDL_Texture* texture = NULL;
     SDL_Event event;
-    SDL_bool quit = SDL_FALSE;
     float focal = 1;
     float speed = 0.1;
 
@@ -72,7 +71,7 @@ int main () {
     
     // Key Events
     Events key;
-    key.UP = SDL_FALSE, key.DOWN = SDL_FALSE, key.LEFT = SDL_FALSE, key.RIGHT = SDL_FALSE;
+    key.FORWARD = SDL_FALSE, key.REAR = SDL_FALSE, key.LEFT = SDL_FALSE, key.RIGHT = SDL_FALSE, key.CTRL = SDL_FALSE, key.SHIFT = SDL_FALSE, key.QUIT = SDL_FALSE;
 
     // Init SDL
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -108,10 +107,10 @@ int main () {
     // START..
 
     SDL_ShowWindow(window);
-    while (!quit) {
+    while (!key.QUIT) {
          
         updateWindow(window, renderer, cam, recF, recB, focal);
-        updateEvents(window, &event, &quit, &key, &focal);
+        updateEvents(window, &event, &key, &focal);
         updatePosition(&cam, &speed, key);
 
     }
