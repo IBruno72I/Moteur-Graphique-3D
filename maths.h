@@ -3,6 +3,7 @@
 #define MATHS_H
 
 #include <SDL2/SDL.h>
+#include <math.h>
 
 typedef struct{
     float x;
@@ -16,8 +17,8 @@ typedef struct{
     float y;
 }Proj;
 
-SDL_Point convertCoord(SDL_Window* window, Coord pos);
-Proj projection(Coord pos);
+SDL_Point convertCoord(SDL_Window* window, Coord pos, float focal);
+Proj projection(Coord pos, float focal);
 //void rotationX(double a, Coord* pos);
 //void rotationY(double a, Coord* pos);
 //void rotationZ(double a, Coord* pos);

@@ -17,16 +17,16 @@ void destroyToQuit(SDL_Window* window, SDL_Renderer* renderer, SDL_Texture* text
 }
 
 // Refresh Window
-void updateWindow(SDL_Window* window, SDL_Renderer* renderer, Coord* recF, Coord* recB) {
+void updateWindow(SDL_Window* window, SDL_Renderer* renderer, Coord* recF, Coord* recB, float focal) {
     clear(renderer);
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 25);
-    drawScare(window, renderer, recF, recB);
+    drawScare(window, renderer, recF, recB, focal);
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
     SDL_RenderPresent(renderer);
 }
 
 // Refresh Events
-void updateEvents(SDL_Window* window, SDL_Event* event, Coord* recF, Coord* recB, SDL_bool* quit, SDL_bool* UP,SDL_bool* DOWN,SDL_bool* LEFT,SDL_bool* RIGHT) {
+void updateEvents(SDL_Window* window, SDL_Event* event, Coord* recF, Coord* recB, SDL_bool* quit, SDL_bool* UP, SDL_bool* DOWN, SDL_bool* LEFT, SDL_bool* RIGHT, float* focal) {
     SDL_WaitEvent(event);
     if ((*event).type == SDL_KEYDOWN) {
         switch ((*event).key.keysym.scancode) {
@@ -48,6 +48,12 @@ void updateEvents(SDL_Window* window, SDL_Event* event, Coord* recF, Coord* recB
                 } else {
                     SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
                 }
+                break;
+            case 87: // +
+                *focal += 0.1;
+                break;
+            case 86: // -
+                *focal -= 0.1;
                 break;
             case 41: // ESCAPE
                 *quit = SDL_TRUE;
@@ -75,7 +81,7 @@ void updateEvents(SDL_Window* window, SDL_Event* event, Coord* recF, Coord* recB
 }
 
 // Refresh Position
-void updatePosition(Coord* recF, Coord* recB, SDL_bool UP,SDL_bool DOWN,SDL_bool LEFT,SDL_bool RIGHT) {
+void updatePosition(Coord* recF, Coord* recB, SDL_bool UP, SDL_bool DOWN, SDL_bool LEFT, SDL_bool RIGHT) {
     if (UP) for (int i = 0; i < 5; i++) {
         recF[i].y -= 0.02;
         recB[i].y -= 0.02;

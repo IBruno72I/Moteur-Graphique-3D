@@ -1,4 +1,4 @@
-FLAGS=-w -Werror -Wall -g
+FLAGS=-w -Werror -Wall -g -lm
 SDL_CFLAGS=`sdl2-config --cflags --libs`
 
 all: exec

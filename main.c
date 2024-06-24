@@ -17,6 +17,7 @@ int main () {
     SDL_Texture* texture = NULL;
     SDL_Event event;
     SDL_bool quit = SDL_FALSE;
+    float focal = 1;
 
     // Rec Front
     Coord recF[5];
@@ -101,8 +102,8 @@ int main () {
     SDL_ShowWindow(window);
     while (!quit) {
          
-        updateWindow(window, renderer, recF, recB);
-        updateEvents(window, &event, recF, recB, &quit, &UP, &DOWN, &LEFT, &RIGHT);
+        updateWindow(window, renderer, recF, recB, focal);
+        updateEvents(window, &event, recF, recB, &quit, &UP, &DOWN, &LEFT, &RIGHT, &focal);
         updatePosition(recF, recB, UP, DOWN, LEFT, RIGHT);
 
     }
