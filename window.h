@@ -6,6 +6,6 @@
 #include <SDL2/SDL.h>
 
 void clear(SDL_Renderer* renderer);
-void drawScare(SDL_Window* window, SDL_Renderer* renderer, Coord cam, Coord* recF, Coord* recB, float focal);
+void drawScare(SDL_Window* window, SDL_Renderer* renderer, Vec3 cam, Vec3* recF, Vec3* recB, float fov);
 
 #endif

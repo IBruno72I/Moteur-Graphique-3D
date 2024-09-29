@@ -17,8 +17,8 @@ typedef struct{
 }Events;
 
 void destroyToQuit(SDL_Window* window, SDL_Renderer* renderer, SDL_Texture* texture);
-void updateWindow(SDL_Window* window, SDL_Renderer* renderer, Coord cam, Coord* recF, Coord* recB, float focal);
-void updateEvents(SDL_Window* window, SDL_Event* event, Events* key, float* focal);
-void updatePosition(Coord* cam, float* speed, Events key);
+void updateWindow(SDL_Window* window, SDL_Renderer* renderer, Vec3 cam, Vec3* recF, Vec3* recB, float fov);
+void updateEvents(SDL_Window* window, SDL_Event* event, Events* key, float* fov);
+void updatePosition(Vec3* cam, float* speed, Events key);
 
 #endif

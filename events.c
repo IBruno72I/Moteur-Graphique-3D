@@ -17,16 +17,16 @@ void destroyToQuit(SDL_Window* window, SDL_Renderer* renderer, SDL_Texture* text
 }
 
 // Refresh Window
-void updateWindow(SDL_Window* window, SDL_Renderer* renderer, Coord cam, Coord* recF, Coord* recB, float focal) {
+void updateWindow(SDL_Window* window, SDL_Renderer* renderer, Vec3 cam, Vec3* recF, Vec3* recB, float fov) {
     clear(renderer);
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 25);
-    drawScare(window, renderer, cam, recF, recB, focal);
+    drawScare(window, renderer, cam, recF, recB, fov);
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
     SDL_RenderPresent(renderer);
 }
 
 // Refresh Events
-void updateEvents(SDL_Window* window, SDL_Event* event, Events* key, float* focal) {
+void updateEvents(SDL_Window* window, SDL_Event* event, Events* key, float* fov) {
     SDL_WaitEvent(event);
     if ((*event).type == SDL_KEYDOWN) {
         switch ((*event).key.keysym.scancode) {
@@ -52,10 +52,10 @@ void updateEvents(SDL_Window* window, SDL_Event* event, Events* key, float* foca
                 key->SHIFT = SDL_TRUE;
                 break;
             case 87: // +
-                *focal += 0.1;
+                *fov += 0.1;
                 break;
             case 86: // -
-                *focal -= 0.1;
+                *fov -= 0.1;
                 break;
             case 68: // F11
                 if (SDL_GetWindowFlags(window) & SDL_WINDOW_FULLSCREEN) {
@@ -99,7 +99,7 @@ void updateEvents(SDL_Window* window, SDL_Event* event, Events* key, float* foca
 }
 
 // Refresh Position
-void updatePosition(Coord* cam, float* speed, Events key) {
+void updatePosition(Vec3* cam, float* speed, Events key) {
     if (key.FORWARD) cam->z += (*speed);
     if (key.REAR) cam->z -= (*speed);
     if (key.LEFT) cam->x -= (*speed);

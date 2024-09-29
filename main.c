@@ -16,17 +16,17 @@ int main () {
     SDL_Renderer* renderer = NULL;
     SDL_Texture* texture = NULL;
     SDL_Event event;
-    float focal = 1;
+    float fov = M_PI / 4;
     float speed = 0.1;
 
     // Position View
-    Coord cam;
+    Vec3 cam;
     cam.x = 0;
     cam.y = 0;
     cam.z = 0;
 
     // Rec Front
-    Coord recF[5];
+    Vec3 recF[5];
     // Rec Front : Point 1
     recF[0].x = -1;
     recF[0].y = -1;
@@ -48,7 +48,7 @@ int main () {
     recF[3].z = 2;
 
     // Rec Back
-    Coord recB[5];
+    Vec3 recB[5];
     // Rec Back : Point 1
     recB[0].x = -1;
     recB[0].y = -1;
@@ -109,8 +109,8 @@ int main () {
     SDL_ShowWindow(window);
     while (!key.QUIT) {
          
-        updateWindow(window, renderer, cam, recF, recB, focal);
-        updateEvents(window, &event, &key, &focal);
+        updateWindow(window, renderer, cam, recF, recB, fov);
+        updateEvents(window, &event, &key, &fov);
         updatePosition(&cam, &speed, key);
 
     }
