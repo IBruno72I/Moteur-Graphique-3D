@@ -6,27 +6,38 @@
 #include <stdlib.h>
 #include <math.h>
 
-// Convert Points x: [-1, 1] -> [0, 1920]  y: [-1, 1] -> [0, 1080]       P(x,y) = (0, 0) => middle of screen
+
 SDL_Point convertVec3(SDL_Window* window, Vec3 cam, Vec3 pos, float fov) {
     SDL_Point point;
     Proj projPos;
     pos.x -= cam.x;
     pos.y -= cam.y;
     pos.z -= cam.z;
-    projPos = projection(pos, fov);
     int width = 0;
     int height = 0;
     SDL_GetWindowSize(window, &width, &height);
-    point.x = (projPos.x + 1)/2 * height + (width/2 - height/2);
-    point.y = (projPos.y + 1)/2 * height;
+    float near = 0.1f;  // Plan proche
+    float far = 100.0f;  // Plan lointain
+    float aspect_ratio = width / height;
+    Mat4 perspective_matrix = mat4_perspective(fov, aspect_ratio, near, far);
+    
+    // Appliquer la projection sur le point 3D
+    Vec3 projected_point = mat4_mul_vec3(perspective_matrix, pos);
+
+    // Division perspective (w est la 4ème composante calculée implicitement)
+    float w = projected_point.z;  // w correspond souvent à z' après projection
+    projected_point.x /= w;
+    projected_point.y /= w;
+    point = convertToScreen(projected_point, width, height);
+
     return point;
 }
 
-Proj projection(Vec3 pos, float fov) {
-    Proj projPos;
-    projPos.x = fov*pos.x / pos.z;
-    projPos.y = fov*pos.y / pos.z;
-    return projPos;
+SDL_Point convertToScreen(Vec3 point, int width, int height) {
+    SDL_Point sdl;
+    sdl.x = (int)((point.x+1)/2.0f*width);
+    sdl.y = (int)((1-point.y)/2.0f*height);
+    return sdl;
 }
 
 //////////////////////////////////////////////////////////////////////////////////

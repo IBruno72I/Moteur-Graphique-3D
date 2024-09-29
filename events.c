@@ -51,10 +51,10 @@ void updateEvents(SDL_Window* window, SDL_Event* event, Events* key, float* fov)
             case 225: // SHIFT
                 key->SHIFT = SDL_TRUE;
                 break;
-            case 87: // +
+            case 112: // P
                 *fov += 0.1;
                 break;
-            case 86: // -
+            case 109: // M
                 *fov -= 0.1;
                 break;
             case 68: // F11
@@ -104,6 +104,6 @@ void updatePosition(Vec3* cam, float* speed, Events key) {
     if (key.REAR) cam->z -= (*speed);
     if (key.LEFT) cam->x -= (*speed);
     if (key.RIGHT) cam->x += (*speed);
-    if (key.SPACE) cam->y -= (*speed);
-    if (key.CTRL) cam->y += (*speed);
+    if (key.SPACE) cam->y += (*speed);
+    if (key.CTRL) cam->y -= (*speed);
 }

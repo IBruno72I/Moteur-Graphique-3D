@@ -20,7 +20,7 @@ typedef struct {
 } Mat4;
 
 SDL_Point convertVec3(SDL_Window* window, Vec3 cam, Vec3 pos, float fov);
-Proj projection(Vec3 pos, float fov);
+SDL_Point convertToScreen(Vec3 point, int width, int height);
 Vec3 vec3_add(Vec3 a, Vec3 b);
 Vec3 vec3_sub(Vec3 a, Vec3 b);
 float vec3_dot(Vec3 a, Vec3 b);
